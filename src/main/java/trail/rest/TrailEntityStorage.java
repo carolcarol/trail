@@ -18,7 +18,17 @@ public class TrailEntityStorage {
 		return entity;
 	}
 	
-//	public static TrailEntity updateTrailEntity(final Long id, final TrailEntity entity) {
-//		TrailEntity origEntity = entities.get (id);
-//	}
+	public static TrailEntity updateTrailEntity(final Long id, final TrailEntity entity) {
+		TrailEntity origEntity = entities.get (id);
+		
+		if (origEntity == null) return null;
+		
+		if(entity.getName()!=null) origEntity.setName(entity.getName());
+		if(entity.getFullName()!=null) origEntity.setFullName(entity.getFullName());
+		if(entity.getEmail()!=null) origEntity.setEmail(entity.getEmail());
+		if(entity.getDevices()!=null) origEntity.setDevices(entity.getDevices()); 
+		
+		return origEntity;
+		
+	}
 }
