@@ -1,4 +1,4 @@
-package trail.rest;
+package trail.rest.resources;
 
 import java.util.Collection;
 
@@ -13,6 +13,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
+import trail.rest.TrailEntityStorage;
 import trail.rest.beans.TrailEntity;
 
 @Path("entities")
@@ -22,7 +23,10 @@ public class EntityResource {
 	@POST
 	@Consumes("application/json")
 	public TrailEntity addTrailEntity (@NotNull @Valid final TrailEntity entity) {
-		return TrailEntityStorage.addTrailEntity (entity);
+		TrailEntity addTrailEntity = TrailEntityStorage.addTrailEntity (entity);
+//		   URI uri = UriBuilder.fromResource (EntityResource.class).build (addTrailEntity);
+//		return Response.created (uri).build ();
+		return addTrailEntity;
 	}
 	
 	@GET
@@ -40,8 +44,8 @@ public class EntityResource {
 	@Path("{id}")
 	@Consumes("application/json")
 	public TrailEntity updateEntity(@PathParam (value = "id") final Long id, final TrailEntity entity){
-		System.out.println("received reuest: "+ id+ "entity"+ entity);
-		return entity;
+		TrailEntity updatedTrailEntity = TrailEntityStorage.updateTrailEntity (id, entity);
+		return updatedTrailEntity;
 	}
 	
 	@DELETE

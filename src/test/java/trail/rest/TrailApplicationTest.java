@@ -1,5 +1,7 @@
 package trail.rest;
 
+import static org.junit.Assert.*;
+
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +20,6 @@ import org.glassfish.jersey.server.ServerProperties;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.TestProperties;
 import org.glassfish.jersey.test.external.ExternalTestContainerFactory;
-
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 
 import trail.rest.beans.Device;
@@ -47,7 +46,7 @@ public class TrailApplicationTest extends JerseyTest {
 		ENT1.setEmail ("email@email");
 		DEVICE1 = new Device();
 		
-		DEVICE1.setMsisdn ("123456");
+		DEVICE1.setMsisdn (null);
 		deviceList1.add(DEVICE1);
 		ENT1.setDevices(deviceList1);
 		
@@ -69,6 +68,7 @@ public class TrailApplicationTest extends JerseyTest {
 
 		final TrailApplication application = new TrailApplication ();
 		application.property (ServerProperties.BV_SEND_ERROR_IN_RESPONSE, true);
+		application.property (ServerProperties.RESOURCE_VALIDATION_IGNORE_ERRORS, false);
 		return application;
 	}
 
@@ -97,9 +97,8 @@ public class TrailApplicationTest extends JerseyTest {
 
 		assertEquals (200, response.getStatus ());
 		assertEquals (ENT1.getFullName (), entity1.getFullName ());
-		assertEquals (ENT1.getDevices().size(),1);
-		assertEquals (ENT1.getDevices().get(0).getMsisdn(),"123456");
-		
+		//assertEquals (ENT1.getDevices().size(),1);
+		//assertEquals (ENT1.getDevices().get(0).getMsisdn(),"123456");
 		assertNotNull (entity1.getId ());
 	}
 
